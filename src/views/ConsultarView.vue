@@ -29,37 +29,15 @@
 
 </template>
 <script>
-//import axios from 'axios';
   export default {
     name: "ConsultaView",
     data() {
       return {
         pessoas: [],
-//        formEditar: false,
- //       id:'',
- //       nome: '',
- // //      sobrenome: '',
-  //      data_nascimento: '',
-//  //      cpf: '',
- //       cep: '',
-   //     endereco: '',
-  //      numero: '',
-  //      complemento: '',
-  //      cidade: '',
-   //     estado: '',
+
       }
     },
     methods: {
-
-//      async getCliente() {
-//  try {
-//    const response = await axios.get('/api/cliente');
-//    console.log(response);
-//  } catch (error) {
-//    console.error(error);
-//  }
-//  },
-
   async getPessoa() {
       let requestOptions = {
       method: 'GET',

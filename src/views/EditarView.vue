@@ -73,7 +73,7 @@
         placeholder="Digite um estado">
       </div>
 
-      <button @click="exibirPessoa()"  type="button" class="btn btn-success">Salvar</button>
+      <button @click="enviarForm()"  type="button" class="btn btn-success">Salvar</button>
     </form>
   </div>
 
@@ -82,7 +82,8 @@
 <script>
 
 export default {
-name: 'EditarView',data() {
+name: 'EditarView',
+data() {
       return {
         pessoas: [],
         nome: '',
@@ -95,12 +96,14 @@ name: 'EditarView',data() {
         complemento: '',
         cidade: '',
         estado: '',
+        msg:'',
       }
     },
     methods: {
 
    async exibirPessoa() {
       let id = this.$route.params._id
+      
    await fetch(`/api/cliente/${id}`, {
       method: "GET",
       headers: {
@@ -109,19 +112,47 @@ name: 'EditarView',data() {
     })
       .then((resp) => resp.json())
       .then((result) => {console.log(result)
-        this.nome = result.data.nome
-        this.sobrenome = result.data.sobrenome
-        this.data_nascimento = result.data.data_nascimento
-        this.cpf = result.data.cpf
-        this.cep = result.data.cep
-        this.endereco = result.data.endereco
-        this.numero = result.data.numero
-        this.complemento = result.data.complemento
-        this.cidade = result.data.cidade
-        this.estado = result.data.estado})
+        this.nome = result.nome
+        this.sobrenome = result.sobrenome
+        this.data_nascimento = result.data_nascimento
+        this.cpf = result.cpf
+        this.cep = result.cep
+        this.endereco = result.endereco
+        this.numero = result.numero
+        this.complemento = result.complemento
+        this.cidade = result.cidade
+        this.estado = result.estado})
       //.then(this.getPessoa())
       .catch((error) => console.log("error", error));
+  },
+  async enviarForm(){
+  let id = this.$route.params._id
+  const data ={
+  nome: this.nome,
+  sobrenome: this.sobrenome,
+  data_nascimento: this.data_nascimento,
+  cpf: this.cpf,
+  cep: this.cep,
+  endereco: this.endereco,
+  numero: this.numero,
+  complemento: this.complemento,
+  cidade: this.cidade,
+  estado: this.estado,
   }
+    const dataJson = JSON.stringify(data)
+    console.log(dataJson)
+    const req = await fetch(`/api/cliente/${id}`, {
+      method: 'PATCH',
+      headers:{"Content-Type": "application/json"},
+      body: dataJson
+    });
+  
+  const res = await req.text()
+  alert(res)
+  
+  }
+
+  
     },
     mounted () {
     this.exibirPessoa()

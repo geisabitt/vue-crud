@@ -1,8 +1,9 @@
 <template>
   <h1>Cadastrar cliente</h1>
+  
   <div class="ajust">
+    
     <form class="container"> 
-
       <div class="form-group">
         <label for="exampleInputEmail1">Nome:</label>
         <input class="form-control" id="nome" v-model="nome" type="text"
@@ -72,9 +73,14 @@
         name="estado"
         placeholder="Digite um estado">
       </div>
+      
 
       <button @click="enviarForm()"  type="button" class="btn btn-success">Cadastrar</button>
       </form>
+
+      <div id="msgDanger" v-show="msg" class="alert alert-danger" role="alert">
+        {{msg}}
+      </div>
   </div>
 
 </template>
@@ -83,7 +89,13 @@
 
 
 export default {
-  name: 'HomeView', methods:{
+  name: 'HomeView',
+  data(){
+    return{
+      msg:'',
+    }
+  },
+   methods:{
 
 async enviarForm(){
   
@@ -107,8 +119,9 @@ estado: this.estado,
     body: dataJson
   });
 
-const res = await req.text()
-alert(res)
+const res = await req.json()
+this.msg = (res.error)
+setTimeout(() => this.msg = '', 3000)
 
 }
   
@@ -136,6 +149,14 @@ color: #42b983;
 form{
 max-width: 500px;
 text-align: left;
+}
+#msgDanger{
+  position: fixed;
+	top: 0; bottom: 0; 
+	left: 0; right:0;
+	margin: auto;
+  width: 500px;
+  height: 60px;
 }
 .form-group{
 margin-bottom: 10px;
