@@ -1,5 +1,5 @@
 <template>
-  <h1>Cadastrar cliente</h1>
+  <h1>Editar cliente {{ this.$route.params._id }} </h1>
   <div class="ajust">
     <form class="container"> 
 
@@ -73,48 +73,60 @@
         placeholder="Digite um estado">
       </div>
 
-      <button @click="enviarForm()"  type="button" class="btn btn-success">Cadastrar</button>
-      </form>
+      <button @click="exibirPessoa()"  type="button" class="btn btn-success">Salvar</button>
+    </form>
   </div>
 
 </template>
 
 <script>
 
-
 export default {
-  name: 'HomeView', methods:{
+name: 'EditarView',data() {
+      return {
+        pessoas: [],
+        nome: '',
+        sobrenome: '',
+        data_nascimento: '',
+        cpf: '',
+        cep: '',
+        endereco: '',
+        numero: '',
+        complemento: '',
+        cidade: '',
+        estado: '',
+      }
+    },
+    methods: {
 
-async enviarForm(){
-  
-const data ={
-nome: this.nome,
-sobrenome: this.sobrenome,
-data_nascimento: this.data_nascimento,
-cpf: this.cpf,
-cep: this.cep,
-endereco: this.endereco,
-numero: this.numero,
-complemento: this.complemento,
-cidade: this.cidade,
-estado: this.estado,
-}
-  const dataJson = JSON.stringify(data)
-  console.log(dataJson)
-  const req = await fetch('/api/cliente', {
-    method: 'POST',
-    headers:{"Content-Type": "application/json"},
-    body: dataJson
-  });
-
-const res = await req.text()
-alert(res)
-
-}
-  
-}
-}
-
+   async exibirPessoa() {
+      let id = this.$route.params._id
+   await fetch(`/api/cliente/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => resp.json())
+      .then((result) => {console.log(result)
+        this.nome = result.data.nome
+        this.sobrenome = result.data.sobrenome
+        this.data_nascimento = result.data.data_nascimento
+        this.cpf = result.data.cpf
+        this.cep = result.data.cep
+        this.endereco = result.data.endereco
+        this.numero = result.data.numero
+        this.complemento = result.data.complemento
+        this.cidade = result.data.cidade
+        this.estado = result.data.estado})
+      //.then(this.getPessoa())
+      .catch((error) => console.log("error", error));
+  }
+    },
+    mounted () {
+    this.exibirPessoa()
+    }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
