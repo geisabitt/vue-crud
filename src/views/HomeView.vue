@@ -78,8 +78,8 @@
       <button @click="enviarForm()"  type="button" class="btn btn-success">Cadastrar</button>
       </form>
 
-      <div id="msgDanger" v-show="msg" class="alert alert-danger" role="alert">
-        {{msg}}
+      <div id="msgDanger" v-show="msgDanger" class="alert alert-danger" role="alert">
+        {{msgDanger}}
       </div>
   </div>
 
@@ -92,7 +92,7 @@ export default {
   name: 'HomeView',
   data(){
     return{
-      msg:'',
+      msgDanger:'',
     }
   },
    methods:{
@@ -119,9 +119,10 @@ estado: this.estado,
     body: dataJson
   });
 
-const res = await req.json()
-this.msg = (res.error)
-setTimeout(() => this.msg = '', 3000)
+const resError = await req.json()
+  this.msgDanger = (resError.error)
+  setTimeout(() => this.msgDanger = '', 3000)
+
 
 }
   
@@ -152,7 +153,15 @@ text-align: left;
 }
 #msgDanger{
   position: fixed;
-	top: 0; bottom: 0; 
+	top: 80%; bottom: 0; 
+	left: 0; right:0;
+	margin: auto;
+  width: 500px;
+  height: 60px;
+}
+#msgSuccess{
+  position: fixed;
+	top: 80%; bottom: 0; 
 	left: 0; right:0;
 	margin: auto;
   width: 500px;

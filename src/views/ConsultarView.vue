@@ -34,15 +34,17 @@
     data() {
       return {
         pessoas: [],
-
       }
     },
     methods: {
+
+
   async getPessoa() {
       let requestOptions = {
       method: 'GET',
       redirect: 'follow'
 };
+
 await fetch("/api/cliente", requestOptions)
   .then(response => response.json())
   .then(result => {this.pessoas = result
@@ -50,16 +52,19 @@ await fetch("/api/cliente", requestOptions)
   .catch(error => console.log('error', error));
       },
       async removePessoa(id) {
-      await fetch(`/api/cliente/${id}`, {
+        if(confirm('Deseja excluir esse registro?')){
+          await fetch(`/api/cliente/${id}`, {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
     })
       .then((resp) => resp.json())
       .then((result) => console.log(result))
       .then(this.getPessoa())
       .catch((error) => console.log("error", error));
+        }
+        setTimeout(() => {
+          window.location.reload()
+        },1000)
+      
   }
     },
     mounted () {
@@ -69,6 +74,8 @@ await fetch("/api/cliente", requestOptions)
 </script>
 
 <style scoped>
+
+
   #table {
     max-width: 1200px;
     margin: 0 auto;

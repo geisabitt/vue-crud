@@ -1,7 +1,7 @@
 <template>
-  <h1>Editar cliente {{ this.$route.params._id }} </h1>
+  <h1>Editar cliente</h1>
   <div class="ajust">
-    <form class="container"> 
+    <form class="container">
 
       <div class="form-group">
         <label for="exampleInputEmail1">Nome:</label>
@@ -72,6 +72,9 @@
         name="estado"
         placeholder="Digite um estado">
       </div>
+      <div id="msgSuccess" v-show="msgSuccess" class="alert alert-success" role="alert">
+        {{msgSuccess}}
+      </div>
 
       <button @click="enviarForm()"  type="button" class="btn btn-success">Salvar</button>
     </form>
@@ -96,7 +99,7 @@ data() {
         complemento: '',
         cidade: '',
         estado: '',
-        msg:'',
+        msgSuccess:'',
       }
     },
     methods: {
@@ -148,7 +151,9 @@ data() {
     });
   
   const res = await req.text()
-  alert(res)
+  console.log(res)
+  this.msgSuccess = 'Alterações feitas com Sucesso'
+  setTimeout(() => this.msgSuccess = '', 3000)
   
   }
 
@@ -179,6 +184,14 @@ color: #42b983;
 form{
 max-width: 500px;
 text-align: left;
+}
+#msgSuccess{
+  position: fixed;
+	top: 80%; bottom: 0; 
+	left: 0; right:0;
+	margin: auto;
+  width: 500px;
+  height: 60px;
 }
 .form-group{
 margin-bottom: 10px;
