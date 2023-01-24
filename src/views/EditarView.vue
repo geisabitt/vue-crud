@@ -4,70 +4,70 @@
     <form class="container">
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Nome:</label>
+        <label for="nome">Nome:</label>
         <input class="form-control" id="nome" v-model="nome" type="text"
         name="nome"
         placeholder="Digite um nome">
       </div> 
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Sobrenome:</label>
+        <label for="sobrenome">Sobrenome:</label>
         <input class="form-control" id="sobrenome" v-model="sobrenome" type="text"
         name="sobrenome"
         placeholder="Digite um sobrenome">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Cpf:</label>
+        <label for="cpf">Cpf:</label>
         <input class="form-control" id="cpf" v-model="cpf" type="text"
         name="cpf"
         placeholder="Digite um cpf">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Data nascimento:</label>
+        <label for="data_nascimento">Data nascimento:</label>
         <input class="form-control" id="data_nascimento" v-model="data_nascimento" type="date"
         name="data_nascimento"
         placeholder="Digite uma data nascimento">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Cep:</label>
+        <label for="cep">Cep:</label>
         <input class="form-control" id="cep" v-model="cep" type="text"
         name="cep"
         placeholder="Digite um cep">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Endereco:</label>
+        <label for="endereco">Endereco:</label>
         <input class="form-control" id="endereco" v-model="endereco" type="text"
         name="endereco"
         placeholder="Digite um endereco">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Numero:</label>
+        <label for="numero">Numero:</label>
         <input class="form-control" id="numero" v-model="numero" type="text"
         name="numero"
         placeholder="Digite um numero">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Complemento:</label>
+        <label for="complemento">Complemento:</label>
         <input class="form-control" id="complemento" v-model="complemento" type="text"
         name="complemento"
         placeholder="Digite um complemento">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Cidade:</label>
+        <label for="cidade">Cidade:</label>
         <input class="form-control" id="cidade" v-model="cidade" type="text"
         name="cidade"
         placeholder="Digite um cidade">
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">Estado:</label>
+        <label for="estado">Estado:</label>
         <input class="form-control" id="estado" v-model="estado" type="text"
         name="estado"
         placeholder="Digite um estado">
@@ -76,7 +76,7 @@
         {{msgSuccess}}
       </div>
 
-      <button @click="enviarForm()"  type="button" class="btn btn-success">Salvar</button>
+      <button id="btn-att-cadastro" @click="enviarForm()"  type="button" class="btn btn-success">Salvar</button>
     </form>
   </div>
 

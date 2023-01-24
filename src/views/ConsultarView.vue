@@ -20,8 +20,8 @@
         <div>{{pessoa.endereco }}, {{pessoa.numero }} / {{pessoa.complemento }} - {{pessoa.cidade }}/{{pessoa.estado }} - {{pessoa.cep }}
         </div>
         <div>          
-          <router-link :to="{name:'editar', params:{_id:pessoa._id}}"><button type="button" class="btn btn-primary">Editar</button></router-link>
-          <button type="button" class="btn btn-danger" @click="removePessoa(pessoa._id)" >Deletar</button>
+          <router-link :to="{name:'editar', params:{_id:pessoa._id}}"><button type="button" class="editar btn btn-primary">Editar</button></router-link>
+          <button type="button" class="deletar btn btn-danger" @click="removePessoa(pessoa._id)" >Deletar</button>
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@ await fetch("/api/cliente", requestOptions)
   .catch(error => console.log('error', error));
       },
       async removePessoa(id) {
-        if(confirm('Deseja excluir esse registro?')){
+       
           await fetch(`/api/cliente/${id}`, {
       method: "DELETE",
     })
@@ -60,7 +60,7 @@ await fetch("/api/cliente", requestOptions)
       .then((result) => console.log(result))
       .then(this.getPessoa())
       .catch((error) => console.log("error", error));
-        }
+        
         setTimeout(() => {
           window.location.reload()
         },1000)

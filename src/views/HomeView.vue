@@ -75,7 +75,7 @@
       </div>
       
 
-      <button @click="enviarForm()"  type="button" class="btn btn-success">Cadastrar</button>
+      <button id="btn-cadastrar" @click="enviarForm()"  type="button" class="btn btn-success">Cadastrar</button>
       </form>
 
       <div id="msgDanger" v-show="msgDanger" class="alert alert-danger" role="alert">
