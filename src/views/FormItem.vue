@@ -1,5 +1,6 @@
 <template>
-  <h1>Editar cliente</h1>
+  <h1>Cadastrar cliente</h1>
+
   <div class="ajust">
     <form class="container">
       <div class="form-group">
@@ -51,66 +52,33 @@
         <label for="estado">Estado:</label>
         <input class="form-control" id="estado" v-model="estado" type="text" name="estado" placeholder="Digite um estado" />
       </div>
-      <div id="msgSuccess" v-show="msgSuccess" class="alert alert-success" role="alert">
-        {{ msgSuccess }}
-      </div>
 
-      <button id="btn-att-cadastro" @click="enviarForm()" type="button" class="btn btn-success">Salvar</button>
+      <button id="btn-cadastrar" @click="enviarForm()" type="button" class="btn btn-success">Cadastrar</button>
     </form>
+
+    <div id="msgDanger" v-show="msgDanger" class="alert alert-danger" role="alert">
+      {{ msgDanger }}
+    </div>
+    <div id="msgSuccess" v-show="msgSuccess" class="alert alert-sucess" role="alert">
+      {{ msgSuccess }}
+    </div>
   </div>
 </template>
 
 <script>
+import {v4 as uuidv4} from "uuid";
+
 export default {
-  name: "EditarView",
+  name: "FormItem",
   data() {
     return {
-      pessoas: [],
-      nome: "",
-      sobrenome: "",
-      data_nascimento: "",
-      cpf: "",
-      cep: "",
-      endereco: "",
-      numero: "",
-      complemento: "",
-      cidade: "",
-      estado: "",
+      msgDanger: "",
       msgSuccess: "",
     };
   },
   methods: {
-    async exibirPessoa() {
-      let id = this.$route.params.id;
-
-      try {
-        // Obter os dados do localStorage
-        const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
-
-        // Encontrar o cliente com o ID correspondente
-        const cliente = clientes.find((cliente) => cliente.id === id);
-
-        // Verificar se o cliente foi encontrado e preencher os campos do formulário
-        if (cliente) {
-          this.nome = cliente.nome || "";
-          this.sobrenome = cliente.sobrenome || "";
-          this.data_nascimento = cliente.data_nascimento || "";
-          this.cpf = cliente.cpf || "";
-          this.cep = cliente.cep || "";
-          this.endereco = cliente.endereco || "";
-          this.numero = cliente.numero || "";
-          this.complemento = cliente.complemento || "";
-          this.cidade = cliente.cidade || "";
-          this.estado = cliente.estado || "";
-        } else {
-          console.log("Cliente não encontrado");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar cliente no localStorage:", error);
-      }
-    },
     async enviarForm() {
-      let id = this.$route.params.id;
+      const id = uuidv4();
       const cliente = {
         id,
         nome: this.nome,
@@ -125,36 +93,43 @@ export default {
         estado: this.estado,
       };
 
-      try {
-        // Obter os dados existentes do localStorage
-        let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
-
-        // Encontrar o índice do cliente pelo ID
-        const clienteIndex = clientes.findIndex((cli) => cli.id === id);
-
-        // Verificar se o cliente foi encontrado
-        if (clienteIndex !== -1) {
-          // Atualizar os dados do cliente no array local
-          clientes[clienteIndex] = cliente;
-
-          // Salvar os dados atualizados de volta no localStorage
-          localStorage.setItem("clientes", JSON.stringify(clientes));
-
-          // Exibir mensagem de sucesso
-          this.msgSuccess = "Dados atualizados com sucesso!";
-          setTimeout(() => (this.msgSuccess = ""), 3000);
-        } else {
-          console.log("Cliente não encontrado para edição");
+      // Verificar se algum atributo do cliente está vazio ou não foi preenchido
+      for (const key in cliente) {
+        if (!cliente[key] || cliente[key].trim() === "") {
+          this.msgDanger = "Erro ao cadastrar: Preencha todos os campos";
+          setTimeout(() => (this.msgDanger = ""), 3000);
+          return; // Interrompe o envio do formulário
         }
+      }
+
+      try {
+        // Tentativa de obter os dados existentes do localStorage
+        const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+        clientes.push(cliente);
+        localStorage.setItem("clientes", JSON.stringify(clientes));
+
+        // Limpar os campos do formulário após o cadastro
+        this.nome = "";
+        this.sobrenome = "";
+        this.data_nascimento = "";
+        this.cpf = "";
+        this.cep = "";
+        this.endereco = "";
+        this.numero = "";
+        this.complemento = "";
+        this.cidade = "";
+        this.estado = "";
+        // Limpar outros campos do formulário conforme necessário
+
+        // Exibir mensagem de sucesso
+        this.msgSuccess = "Dados salvos com sucesso!";
+        setTimeout(() => (this.msgSuccess = ""), 3000);
       } catch (error) {
         console.error("Erro ao salvar os dados:", error);
         this.msgDanger = "Erro ao salvar os dados. Tente novamente mais tarde.";
         setTimeout(() => (this.msgDanger = ""), 3000);
       }
     },
-  },
-  mounted() {
-    this.exibirPessoa();
   },
 };
 </script>
@@ -178,6 +153,16 @@ a {
 form {
   max-width: 500px;
   text-align: left;
+}
+#msgDanger {
+  position: fixed;
+  top: 80%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 500px;
+  height: 60px;
 }
 #msgSuccess {
   position: fixed;

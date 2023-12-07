@@ -1,12 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from "vue-router";
 
-import HomeView from '../views/HomeView.vue';
+import FormItem from "../views/FormItem.vue";
 
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "FormItem",
+    component: FormItem,
   },
   {
     path: "/consultar",
@@ -14,7 +14,7 @@ const routes = [
     component: () => import("../views/ConsultarView.vue"),
   },
   {
-    path: "/editar/:_id",
+    path: "/editar/:id",
     name: "editar",
     component: () => import("../views/EditarView.vue"),
   },
